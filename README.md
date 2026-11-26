@@ -25,7 +25,7 @@ git clone https://github.com/triwahyu45/SAMURAI.git ~/.claude/skills/SAMURAI
 
 - **Runtime / Tools**: **Python 3.10+**, **FFmpeg** (with `libx264`, `aac`, `ebur128`), **Chromium / Playwright** (GPU ANGLE `d3d11` on Windows), **Pillow**, **NumPy**
 - **MCP Servers**: None required (runs via local Python CLI scripts)
-- **Related Skills**: [`director`](https://github.com/triwahyu45/director) (optional upstream creative brief -> `scene_spec.json`)
+- **Related Skills**: [`director`](https://github.com/triwahyu45/DIRECTOR) (optional upstream creative brief -> `scene_spec.json`)
 - **API Keys / Secrets**: None (100% local & free)
 
 ---
