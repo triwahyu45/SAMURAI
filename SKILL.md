@@ -1,5 +1,5 @@
 ---
-name: samurai
+name: SAMURAI
 description: Use when validating or rendering a scene_spec.json file into MP4 video, muxing audio to loudness targets, or running automated post-render QA metrics (validasi, render video dari spec, cek QA). Do NOT use when writing a creative brief, treatment, storyboard, timeline, or choosing visual style.
 ---
 

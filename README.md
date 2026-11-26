@@ -1,4 +1,4 @@
-# samurai — Katana Motion Execution & Video QA Engine
+# SAMURAI — Katana Motion Execution & Video QA Engine
 
 AI Agent Skill for **Antigravity**, **Claude Code**, and **OpenAI Codex**. Deterministic Canvas2D + Three.js WebGL motion renderer, procedural SFX synthesizer, and SSIM/frame/LUFS automated video QA engine.
 
@@ -10,13 +10,13 @@ Clone this skill into your agent's global or project skills directory:
 
 | Agent | Global Install Path | Project-Local Path |
 | :--- | :--- | :--- |
-| **Antigravity** | `~/.gemini/config/skills/samurai` | `.agents/skills/samurai` |
-| **Claude Code** | `~/.claude/skills/samurai` | `.claude/skills/samurai` |
-| **OpenAI Codex** | `~/.codex/skills/samurai` | `.agents/skills/samurai` |
+| **Antigravity** | `~/.gemini/config/skills/SAMURAI` | `.agents/skills/SAMURAI` |
+| **Claude Code** | `~/.claude/skills/SAMURAI` | `.claude/skills/SAMURAI` |
+| **OpenAI Codex** | `~/.codex/skills/SAMURAI` | `.agents/skills/SAMURAI` |
 
 ```bash
 # Example (Antigravity / Claude Code / Codex — pick your path):
-git clone https://github.com/triwahyu45/samurai.git ~/.claude/skills/samurai
+git clone https://github.com/triwahyu45/SAMURAI.git ~/.claude/skills/SAMURAI
 ```
 
 ---
