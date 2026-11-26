@@ -10,7 +10,7 @@ Clone this skill into your agent's global or project skills directory:
 
 | Agent | Global Install Path | Project-Local Path |
 | :--- | :--- | :--- |
-| **Antigravity** | `~/.gemini/config/skills/SAMURAI` | `.agents/skills/SAMURAI` |
+| **Antigravity** | Global Antigravity skills dir | `.agents/skills/SAMURAI` |
 | **Claude Code** | `~/.claude/skills/SAMURAI` | `.claude/skills/SAMURAI` |
 | **OpenAI Codex** | `~/.codex/skills/SAMURAI` | `.agents/skills/SAMURAI` |
 
