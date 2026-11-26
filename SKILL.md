@@ -53,6 +53,7 @@ Pure deterministic rendering and post-render QA engine supporting dual backends 
 - `engine/three.min.js` — Vendored Three.js WebGL library.
 - `scripts/validate_spec.py` & `scripts/test_schema_registry_sync.py` — Schema & registry parity validators.
 - `scripts/render_samurai_cli.py`, `scripts/qa_video.py`, `scripts/strip_audit.py`, `scripts/audit_motion_ssim.py`, `scripts/audit_all_frames.py`, `scripts/sfx_synth.py`, `scripts/transcribe_beats.py`.
+- **Optional Free SFX & Audio Sources** (complementing `scripts/sfx_synth.py`): `earshot` MCP (`Leonxlnx/earshot`, 922 procedural designs & 252 film SFX bank), `Bodila51/opus-sound-layer` (1,139 CC0 recordings), and `Openverse API` (`https://api.openverse.org/v1/audio/?q=...`, zero API key).
 
 ---
 
