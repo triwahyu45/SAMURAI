@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://samurai-engine.local/schema/fix_card.schema.json",
+  "title": "Samurai Fix Card Specification",
+  "description": "Structured revision ticket emitted by samurai-director critic pass and applied to scene_spec.json.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "start_frame", "end_frame", "must_not_change", "observed_failure", "qa_metric_ref", "target_mechanism", "banned_shortcuts"],
+  "properties": {
+    "id": { "type": "string", "minLength": 1 },
+    "start_frame": { "type": "integer", "minimum": 0 },
+    "end_frame": { "type": "integer", "minimum": 0 },
+    "must_not_change": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "observed_failure": { "type": "string", "minLength": 5 },
+    "qa_metric_ref": { "type": "string", "minLength": 1 },
+    "target_mechanism": { "type": "string", "minLength": 5 },
+    "banned_shortcuts": { "type": "array", "items": { "type": "string" }, "minItems": 1 }
+  }
+}

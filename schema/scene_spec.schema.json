@@ -1,0 +1,251 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://samurai-engine.local/schema/scene_spec.schema.json",
+  "title": "Samurai Engine Scene Specification",
+  "description": "Renderer-agnostic contract between samurai-director (producer) and samurai-engine (consumer). Supports canvas2d and webgl backends with strict per-backend layer type enforcement.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["meta", "dials", "camera", "scenes", "layers", "transitions", "beats"],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fps", "width", "height", "duration_frames", "audio_path", "clock_source", "renderer"],
+      "properties": {
+        "fps": { "type": "number", "exclusiveMinimum": 0, "maximum": 240 },
+        "width": { "type": "integer", "minimum": 16 },
+        "height": { "type": "integer", "minimum": 16 },
+        "duration_frames": { "type": "integer", "minimum": 1 },
+        "audio_path": { "type": ["string", "null"] },
+        "clock_source": { "type": "string", "enum": ["music", "voice", "reads"] },
+        "renderer": { "type": "string", "enum": ["canvas2d", "webgl"] },
+        "shutter_samples": { "type": "integer", "minimum": 1, "maximum": 32, "default": 4 },
+        "shutter_angle": { "type": "number", "minimum": 0, "maximum": 360, "default": 180 },
+        "linear_light": { "type": "boolean", "default": true }
+      }
+    },
+    "dials": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["clock", "continuity", "register", "text_policy"],
+      "properties": {
+        "clock": { "type": "string", "enum": ["music", "voice", "reads"] },
+        "continuity": { "type": "string", "enum": ["one_shape", "journey", "morph_chain", "cut_on_beat", "chaptered"] },
+        "register": { "type": "string", "enum": ["clean", "handmade", "editorial", "kinetic"] },
+        "text_policy": { "type": "string", "enum": ["type_as_hero", "in_world_captions", "no_text"] }
+      }
+    },
+    "camera": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "position"],
+      "properties": {
+        "type": { "type": "string", "enum": ["ortho2d", "perspective"] },
+        "fov": { "type": "number", "minimum": 5, "maximum": 150 },
+        "position": { "$ref": "#/$defs/vec3Tracks" },
+        "target": { "$ref": "#/$defs/vec3Tracks" },
+        "zoom": { "$ref": "#/$defs/track" },
+        "rotZ": { "$ref": "#/$defs/track" },
+        "dof": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["focus", "aperture"],
+          "properties": {
+            "focus": { "type": "number", "exclusiveMinimum": 0 },
+            "aperture": { "type": "number", "minimum": 0 }
+          }
+        }
+      }
+    },
+    "scenes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "start_frame", "end_frame"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "start_frame": { "type": "integer", "minimum": 0 },
+          "end_frame": { "type": "integer", "minimum": 1 }
+        }
+      }
+    },
+    "layers": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "type", "z", "tracks"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "type": { "type": "string", "minLength": 1 },
+          "z": { "type": "number" },
+          "scene_id": { "type": "string", "minLength": 1 },
+          "transform": { "$ref": "#/$defs/transformTracks" },
+          "tracks": {
+            "type": "object",
+            "additionalProperties": { "$ref": "#/$defs/track" }
+          },
+          "props": { "type": "object" }
+        }
+      }
+    },
+    "transitions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "type", "from_scene", "to_scene", "at_frame", "params"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "type": { "type": "string", "enum": ["hard_cut", "whip_pan", "zoom_punch", "diagonal_wipe", "cross_mask", "flash_cut"] },
+          "from_scene": { "type": "string", "minLength": 1 },
+          "to_scene": { "type": "string", "minLength": 1 },
+          "at_frame": { "type": "integer", "minimum": 0 },
+          "exit_velocity_px_per_frame": { "type": "number" },
+          "enter_velocity_px_per_frame": { "type": "number" },
+          "params": { "type": "object" }
+        }
+      }
+    },
+    "beats": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["frame", "strength", "hero_layer_id"],
+        "properties": {
+          "frame": { "type": "integer", "minimum": 0 },
+          "strength": { "type": "number", "minimum": 0, "maximum": 1 },
+          "hero_layer_id": { "type": "string", "minLength": 1 },
+          "sfx_id": { "type": ["string", "null"] }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "meta": { "required": ["renderer"], "properties": { "renderer": { "const": "canvas2d" } } } } },
+      "then": {
+        "properties": {
+          "layers": {
+            "items": {
+              "properties": {
+                "type": {
+                  "enum": [
+                    "panel_bg", "wide_text", "animated_text", "proportional_chars",
+                    "floor_mask_stagger", "fluid_wave_text", "slit_wave_text",
+                    "directional_smear_text", "echo_text_trail", "echo_text_wall",
+                    "diagonal_slice_text", "echo_shapes", "embers", "center_flare",
+                    "anamorphic_flare", "ink_burst", "radial_burst", "brand_logo", "framed_media"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "meta": { "required": ["renderer"], "properties": { "renderer": { "const": "webgl" } } } } },
+      "then": {
+        "properties": {
+          "layers": {
+            "items": {
+              "properties": {
+                "type": {
+                  "enum": [
+                    "webgl_bg", "text_plane", "canvas_texture", "mesh_cube",
+                    "mesh_plane", "mesh_group", "light_directional", "light_ambient",
+                    "particle_field", "post_fx"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "ease": {
+      "oneOf": [
+        {
+          "type": "string",
+          "enum": ["linear", "easeIn", "easeOut", "easeInOut", "expoOut", "whipInOut", "easeOutBack", "anticipate"]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "p"],
+          "properties": {
+            "type": { "const": "bezier" },
+            "p": {
+              "type": "array",
+              "prefixItems": [
+                { "type": "number", "minimum": 0, "maximum": 1 },
+                { "type": "number" },
+                { "type": "number", "minimum": 0, "maximum": 1 },
+                { "type": "number" }
+              ],
+              "minItems": 4,
+              "maxItems": 4
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "stiffness", "damping", "mass"],
+          "properties": {
+            "type": { "const": "spring" },
+            "stiffness": { "type": "number", "exclusiveMinimum": 0 },
+            "damping": { "type": "number", "exclusiveMinimum": 0 },
+            "mass": { "type": "number", "exclusiveMinimum": 0 }
+          }
+        }
+      ]
+    },
+    "keyframe": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["t", "v"],
+      "properties": {
+        "t": { "type": "number", "minimum": 0 },
+        "v": { "type": ["number", "string", "boolean"] },
+        "ease": { "$ref": "#/$defs/ease" }
+      }
+    },
+    "track": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/keyframe" }
+    },
+    "vec3Tracks": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "x": { "$ref": "#/$defs/track" },
+        "y": { "$ref": "#/$defs/track" },
+        "z": { "$ref": "#/$defs/track" }
+      }
+    },
+    "transformTracks": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "x": { "$ref": "#/$defs/track" },
+        "y": { "$ref": "#/$defs/track" },
+        "z": { "$ref": "#/$defs/track" },
+        "rotX": { "$ref": "#/$defs/track" },
+        "rotY": { "$ref": "#/$defs/track" },
+        "rotZ": { "$ref": "#/$defs/track" },
+        "scaleX": { "$ref": "#/$defs/track" },
+        "scaleY": { "$ref": "#/$defs/track" },
+        "scaleZ": { "$ref": "#/$defs/track" }
+      }
+    }
+  }
+}

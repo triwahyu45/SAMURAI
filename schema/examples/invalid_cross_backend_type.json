@@ -1,0 +1,34 @@
+{
+  "meta": {
+    "fps": 30,
+    "width": 1920,
+    "height": 1080,
+    "duration_frames": 60,
+    "audio_path": null,
+    "clock_source": "voice",
+    "renderer": "canvas2d"
+  },
+  "dials": {
+    "clock": "voice",
+    "continuity": "cut_on_beat",
+    "register": "kinetic",
+    "text_policy": "type_as_hero"
+  },
+  "camera": {
+    "type": "ortho2d",
+    "position": { "x": [{ "t": 0, "v": 0 }] }
+  },
+  "scenes": [
+    { "id": "s1", "start_frame": 0, "end_frame": 60 }
+  ],
+  "layers": [
+    {
+      "id": "wrong_backend_cube",
+      "type": "mesh_cube",
+      "z": 5,
+      "tracks": { "color": [{ "t": 0, "v": "#E2261C" }] }
+    }
+  ],
+  "transitions": [],
+  "beats": []
+}

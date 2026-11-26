@@ -1,0 +1,86 @@
+{
+  "meta": {
+    "fps": 30,
+    "width": 1920,
+    "height": 1080,
+    "duration_frames": 90,
+    "audio_path": null,
+    "clock_source": "music",
+    "renderer": "webgl",
+    "shutter_samples": 4,
+    "shutter_angle": 180,
+    "linear_light": true
+  },
+  "dials": {
+    "clock": "music",
+    "continuity": "journey",
+    "register": "kinetic",
+    "text_policy": "type_as_hero"
+  },
+  "camera": {
+    "type": "perspective",
+    "fov": 38,
+    "position": {
+      "x": [{ "t": 0, "v": -1.5 }, { "t": 3, "v": 1.5, "ease": "easeInOut" }],
+      "y": [{ "t": 0, "v": 0.4 }],
+      "z": [{ "t": 0, "v": 8.0 }, { "t": 3, "v": 5.5, "ease": "expoOut" }]
+    },
+    "target": {
+      "x": [{ "t": 0, "v": 0 }],
+      "y": [{ "t": 0, "v": 0 }],
+      "z": [{ "t": 0, "v": 0 }]
+    },
+    "dof": { "focus": 6.5, "aperture": 0.012 }
+  },
+  "scenes": [
+    { "id": "orbit_3d", "start_frame": 0, "end_frame": 90 }
+  ],
+  "layers": [
+    {
+      "id": "bg_stage",
+      "type": "webgl_bg",
+      "z": -10,
+      "scene_id": "orbit_3d",
+      "tracks": { "color": [{ "t": 0, "v": "#070709" }] }
+    },
+    {
+      "id": "hero_cube",
+      "type": "mesh_cube",
+      "z": 0,
+      "scene_id": "orbit_3d",
+      "transform": {
+        "x": [{ "t": 0, "v": 1.8 }],
+        "y": [{ "t": 0, "v": 0 }],
+        "z": [{ "t": 0, "v": 0 }],
+        "rotY": [{ "t": 0, "v": 0 }, { "t": 2.5, "v": -1.6, "ease": "easeOutBack" }]
+      },
+      "tracks": { "color": [{ "t": 0, "v": "#E2261C" }] }
+    },
+    {
+      "id": "hero_label",
+      "type": "text_plane",
+      "z": 1,
+      "scene_id": "orbit_3d",
+      "transform": {
+        "x": [{ "t": 0, "v": -1.8 }],
+        "y": [{ "t": 0, "v": 0 }],
+        "z": [{ "t": 0, "v": 0.5 }]
+      },
+      "tracks": { "opacity": [{ "t": 0, "v": 1 }] },
+      "props": { "text": "3D", "color": "#F4F1EA", "font": "900 220px \"Archivo Black\", sans-serif" }
+    },
+    {
+      "id": "post_stack",
+      "type": "post_fx",
+      "z": 100,
+      "tracks": {
+        "bloom": [{ "t": 0, "v": 0.35 }],
+        "chromatic_aberration": [{ "t": 0, "v": 0.003 }]
+      }
+    }
+  ],
+  "transitions": [],
+  "beats": [
+    { "frame": 15, "strength": 0.85, "hero_layer_id": "hero_cube", "sfx_id": "whoosh_01" }
+  ]
+}

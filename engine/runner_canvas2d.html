@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1920, height=1080">
+<title>Samurai Engine — Canvas2D Spec Runner</title>
+<link href="file:///C:/Users/hando/.gemini/config/skills/samurai-engine/engine/fonts/fonts.css" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1920px; height: 1080px; overflow: hidden; background: #070709; }
+  canvas#stage { display: block; width: 1920px; height: 1080px; }
+</style>
+</head>
+<body>
+<canvas id="stage" width="1920" height="1080"></canvas>
+<script src="file:///C:/Users/hando/.gemini/config/skills/samurai-engine/engine/three.min.js"></script>
+<script src="file:///C:/Users/hando/.gemini/config/skills/samurai-engine/engine/samurai-core.js"></script>
+<script src="file:///C:/Users/hando/.gemini/config/skills/samurai-engine/engine/spec-runner.js"></script>
+<script>
+window.samuraiReady = false;
+window.loadSamuraiSpec = function (spec) {
+  const canvas = document.getElementById('stage');
+  window.renderFrame = window.SamuraiSpecRunner.createSpecRunner(canvas, spec);
+  window.samuraiReady = true;
+};
+</script>
+</body>
+</html>

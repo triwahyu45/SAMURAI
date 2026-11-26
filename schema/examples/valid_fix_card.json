@@ -1,0 +1,10 @@
+{
+  "id": "fc_01_animation_clip",
+  "start_frame": 712,
+  "end_frame": 754,
+  "must_not_change": ["s01_hook", "s02_mcp", "audio_path"],
+  "observed_failure": "ANIMATION text clips left/right margins at f=720 in phone_sheet.jpg",
+  "qa_metric_ref": "edge_clipping_count == 0",
+  "target_mechanism": "Reduce font size to 415px with scaleX 1.08 inside safe-area margin 5%",
+  "banned_shortcuts": ["cropping video", "shrinking entire canvas"]
+}

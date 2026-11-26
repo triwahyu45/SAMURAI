@@ -1,0 +1,78 @@
+{
+  "meta": {
+    "fps": 30,
+    "width": 1920,
+    "height": 1080,
+    "duration_frames": 90,
+    "audio_path": null,
+    "clock_source": "voice",
+    "renderer": "canvas2d",
+    "shutter_samples": 4,
+    "shutter_angle": 180,
+    "linear_light": true
+  },
+  "dials": {
+    "clock": "voice",
+    "continuity": "cut_on_beat",
+    "register": "kinetic",
+    "text_policy": "type_as_hero"
+  },
+  "camera": {
+    "type": "ortho2d",
+    "position": {
+      "x": [{ "t": 0, "v": 0 }, { "t": 3, "v": 0, "ease": "linear" }],
+      "y": [{ "t": 0, "v": 0 }]
+    },
+    "zoom": [{ "t": 0, "v": 1.0 }, { "t": 1.5, "v": 1.08, "ease": { "type": "bezier", "p": [0.16, 1.0, 0.3, 1.0] } }]
+  },
+  "scenes": [
+    { "id": "hook", "start_frame": 0, "end_frame": 45 },
+    { "id": "payoff", "start_frame": 45, "end_frame": 90 }
+  ],
+  "layers": [
+    {
+      "id": "bg_dark",
+      "type": "panel_bg",
+      "z": 0,
+      "scene_id": "hook",
+      "tracks": {
+        "hex": [{ "t": 0, "v": "#070709" }],
+        "glowHex": [{ "t": 0, "v": "#240908" }]
+      }
+    },
+    {
+      "id": "title_hook",
+      "type": "animated_text",
+      "z": 10,
+      "scene_id": "hook",
+      "transform": {
+        "x": [{ "t": 0, "v": 960 }],
+        "y": [{ "t": 0, "v": 620 }, { "t": 0.4, "v": 540, "ease": { "type": "spring", "stiffness": 280, "damping": 20, "mass": 1 } }]
+      },
+      "tracks": {
+        "opacity": [{ "t": 0, "v": 0 }, { "t": 0.15, "v": 1, "ease": "expoOut" }]
+      },
+      "props": {
+        "text": "NO WAY.",
+        "font": "900 320px \"Archivo Black\", sans-serif",
+        "color": "#F4F1EA",
+        "scaleX": 1.3
+      }
+    }
+  ],
+  "transitions": [
+    {
+      "id": "tr_1",
+      "type": "whip_pan",
+      "from_scene": "hook",
+      "to_scene": "payoff",
+      "at_frame": 45,
+      "exit_velocity_px_per_frame": -95,
+      "enter_velocity_px_per_frame": -95,
+      "params": { "duration_frames": 6 }
+    }
+  ],
+  "beats": [
+    { "frame": 12, "strength": 0.9, "hero_layer_id": "title_hook", "sfx_id": "sub_impact_01" }
+  ]
+}

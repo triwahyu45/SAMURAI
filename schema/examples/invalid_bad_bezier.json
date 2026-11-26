@@ -1,0 +1,36 @@
+{
+  "meta": {
+    "fps": 30,
+    "width": 1920,
+    "height": 1080,
+    "duration_frames": 60,
+    "audio_path": null,
+    "clock_source": "voice",
+    "renderer": "canvas2d"
+  },
+  "dials": {
+    "clock": "voice",
+    "continuity": "cut_on_beat",
+    "register": "kinetic",
+    "text_policy": "type_as_hero"
+  },
+  "camera": {
+    "type": "ortho2d",
+    "position": { "x": [{ "t": 0, "v": 0 }] }
+  },
+  "scenes": [
+    { "id": "s1", "start_frame": 0, "end_frame": 60 }
+  ],
+  "layers": [
+    {
+      "id": "bad_ease_layer",
+      "type": "wide_text",
+      "z": 1,
+      "tracks": {
+        "opacity": [{ "t": 0, "v": 0 }, { "t": 1, "v": 1, "ease": { "type": "bezier", "p": [0.2, 0.8] } }]
+      }
+    }
+  ],
+  "transitions": [],
+  "beats": []
+}
